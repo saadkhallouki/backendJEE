@@ -1,9 +1,6 @@
 package com.example.JEE.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +14,8 @@ public class Table {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tableID;
     private int capacity;
+    @ManyToOne
+    private Restaurant restaurant;
     private boolean isAvailable;
 
     public void reserveTable() {

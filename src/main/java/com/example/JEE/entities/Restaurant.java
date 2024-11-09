@@ -1,0 +1,30 @@
+package com.example.JEE.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Restaurant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int restaurantID;
+    private String name;
+    private String location;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Table> tables;
+
+    public boolean reserveTable() {
+        // Placeholder logic to reserve a table
+        return true;
+    }
+
+    // Getters and setters
+}

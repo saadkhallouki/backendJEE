@@ -2,25 +2,22 @@ package com.example.JEE.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Table {
+@Builder
+public class ImageData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tableID;
-    private int capacity;
-    @ManyToOne
-    private Restaurant restaurant;
-    private boolean isAvailable;
+    private Long id;
 
-    public void reserveTable() {
-        this.isAvailable = false;
-    }
-
-    // Getters and setters
+    private String name;
+    private String type;
+    private byte[] imageData;
 }

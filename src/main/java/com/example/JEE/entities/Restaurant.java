@@ -17,9 +17,10 @@ public class Restaurant {
     private int restaurantID;
     private String name;
     private String location;
+    private String ImgUrl;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<Table> tables;
+    private List<Tables> tables;
 
     public boolean reserveTable() {
         // Placeholder logic to reserve a table

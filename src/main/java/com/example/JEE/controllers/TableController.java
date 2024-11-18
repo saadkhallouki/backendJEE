@@ -1,6 +1,6 @@
 package com.example.JEE.controllers;
 
-import com.example.JEE.entities.Table;
+import com.example.JEE.entities.Tables;
 import com.example.JEE.services.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +15,17 @@ public class TableController {
     private TableService tableService;
 
     @PostMapping
-    public Table createTable(@RequestBody Table table) {
-        return tableService.createTable(table);
+    public Tables createTable(@RequestBody Tables tables) {
+        return tableService.createTable(tables);
     }
 
     @GetMapping("/{id}")
-    public Optional<Table> getTableById(@PathVariable int id) {
+    public Optional<Tables> getTableById(@PathVariable int id) {
         return tableService.getTableById(id);
     }
 
     @GetMapping
-    public List<Table> getAllTables() {
+    public List<Tables> getAllTables() {
         return tableService.getAllTables();
     }
 

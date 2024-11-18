@@ -23,7 +23,7 @@ public class StorageService {
     @Autowired
     private FileDataRepository fileDataRepository;
 
-    private final String FOLDER_PATH="C:/Users/qsdfghjklm/Desktop/stage/photo";
+    private final String FOLDER_PATH="C:/Users/qsdfghjklm/Desktop/stage/photo/";
 
 
 

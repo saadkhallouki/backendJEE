@@ -16,7 +16,9 @@ public class ReviewController {
 
     @PostMapping
     public Review createReview(@RequestBody Review review) {
-        return reviewService.createReview(review);
+        if(review.getRating()<=10){
+        return reviewService.createReview(review);}
+        else return null;
     }
 
     @GetMapping("/{id}")

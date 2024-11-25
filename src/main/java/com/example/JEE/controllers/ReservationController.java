@@ -23,6 +23,10 @@ public class ReservationController {
     public Optional<Reservation> getReservationById(@PathVariable int id) {
         return reservationService.getReservationById(id);
     }
+    @PostMapping("/validate/{id}")
+    public Reservation validateReservation(@PathVariable int id){
+        return reservationService.validateReservation(id);
+    }
 
     @GetMapping
     public List<Reservation> getAllReservations() {

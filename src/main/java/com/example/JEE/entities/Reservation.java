@@ -22,7 +22,7 @@ public class Reservation {
     private int restaurantID;
     private int tableID;
     private LocalDateTime reservationTime;
-    private String status;
+    private Status status;
 
     // Getters and setters
 }

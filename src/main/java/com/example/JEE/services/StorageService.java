@@ -23,22 +23,25 @@ public class StorageService {
     @Autowired
     private FileDataRepository fileDataRepository;
 
-    private final String FOLDER_PATH="C:/Users/qsdfghjklm/Desktop/stage/photo/";
-
+    private final String FOLDER_PATH="C:/5iir/ProjectJEE/restaurant-frontend/src/assets/images/";
 
 
     public String uploadImageToFileSystem(MultipartFile file) throws IOException {
-        String filePath= file.getOriginalFilename();
+        String filePath = FOLDER_PATH + file.getOriginalFilename(); // Chemin complet
 
-        FileData fileData=fileDataRepository.save(FileData.builder()
+        // Sauvegarde des informations du fichier dans la base de données
+        FileData fileData = fileDataRepository.save(FileData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
-                .filePath(filePath).build());
+                .filePath(filePath)
+                .build());
 
-        file.transferTo(new File(FOLDER_PATH+filePath));
+        // Transfert du fichier dans le dossier
+        file.transferTo(new File(filePath));
 
+        // Retourne l'URL publique
         if (fileData != null) {
-            return  filePath;
+            return "http://localhost:8080/images/" + file.getOriginalFilename(); // URL dynamique
         }
         return null;
     }

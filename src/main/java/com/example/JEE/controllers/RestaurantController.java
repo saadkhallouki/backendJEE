@@ -41,6 +41,26 @@ public class RestaurantController {
         return restaurantService.getAllRestaurants();
     }
 
+    @PutMapping("/{id}")
+    public Restaurant updateRestaurant(
+            @PathVariable int id,
+            @RequestParam("Name") String name,
+            @RequestParam("Localisation") String localisation,
+            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+
+        Restaurant restaurant = restaurantService.getRestaurantById(id)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+
+        restaurant.setName(name);
+        restaurant.setLocation(localisation);
+
+        if (file != null && !file.isEmpty()) {
+            restaurant.setImgUrl(storageService.uploadImageToFileSystem(file));
+        }
+
+        return restaurantService.createRestaurant(restaurant);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteRestaurant(@PathVariable int id) {
         restaurantService.deleteRestaurant(id);

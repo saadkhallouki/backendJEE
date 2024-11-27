@@ -21,6 +21,7 @@ public class Reservation {
     private int userID;
     private int restaurantID;
     private int tableID;
+    private String email;
     private LocalDateTime reservationTime;
     private Status status;
 

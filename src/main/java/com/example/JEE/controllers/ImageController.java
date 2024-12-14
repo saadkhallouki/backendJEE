@@ -15,7 +15,7 @@ import java.nio.file.Path;
 @RequestMapping("/images")
 public class ImageController {
 
-    private final String FOLDER_PATH = "C:/5iir/ProjectJEE/restaurant-frontend/src/assets/images/";
+    private final String FOLDER_PATH = "C:/Users/qsdfghjklm/Desktop/projectTest/frontuser/src/assets/images/";
 
     @GetMapping("/{fileName}")
     public ResponseEntity<Resource> getImage(@PathVariable String fileName) throws IOException {

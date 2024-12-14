@@ -1,8 +1,13 @@
 package com.example.JEE.controllers;
 
+import com.example.JEE.config.JwtService;
 import com.example.JEE.entities.Restaurant;
+import com.example.JEE.entities.User;
+import com.example.JEE.repositories.UserRepository;
 import com.example.JEE.services.RestaurantService;
 import com.example.JEE.services.StorageService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,11 +18,14 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurants")
+@AllArgsConstructor
 public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
     @Autowired
     private StorageService storageService;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @PostMapping
     public Restaurant createRestaurant(@RequestParam("Name") String name,@RequestParam("Localisation")
@@ -31,15 +39,20 @@ public class RestaurantController {
     }
 
 
-    @GetMapping("/{id}")
-    public Optional<Restaurant> getRestaurantById(@PathVariable int id) {
-        return restaurantService.getRestaurantById(id);
+    @GetMapping()
+    public Restaurant getRestaurantById(@PathVariable int id, HttpServletRequest httpServletRequest) {
+        String token=httpServletRequest.getHeader("Authorization").substring(7);
+        String email=jwtService.extractEmail(token);
+        User user = userRepository.findUtilisateurByEmail(email).get();
+
+
+        return user.getRestaurant();
     }
 
-    @GetMapping
-    public List<Restaurant> getAllRestaurants() {
-        return restaurantService.getAllRestaurants();
-    }
+    //@GetMapping
+    //public List<Restaurant> getAllRestaurants() {
+      //  return restaurantService.getAllRestaurants();
+    //}
 
     @PutMapping("/{id}")
     public Restaurant updateRestaurant(

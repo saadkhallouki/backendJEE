@@ -29,18 +29,23 @@ public class RestaurantController {
 
     @PostMapping
     public Restaurant createRestaurant(@RequestParam("Name") String name,@RequestParam("Localisation")
-                                        String localisation, @RequestParam("file") MultipartFile file )
+                                        String localisation, @RequestParam("file") MultipartFile file
+            , HttpServletRequest httpServletRequest)
             throws IOException {
+        String token=httpServletRequest.getHeader("Authorization").substring(7);
+        String email=jwtService.extractEmail(token);
+        User user = userRepository.findUtilisateurByEmail(email).get();
         Restaurant restaurant=new Restaurant();
         restaurant.setName(name);
         restaurant.setLocation(localisation);
         restaurant.setImgUrl(storageService.uploadImageToFileSystem(file));
+        user.setRestaurant(restaurant);
         return restaurantService.createRestaurant(restaurant);
     }
 
 
     @GetMapping()
-    public Restaurant getRestaurantById(@PathVariable int id, HttpServletRequest httpServletRequest) {
+    public Restaurant getRestaurantById( HttpServletRequest httpServletRequest) {
         String token=httpServletRequest.getHeader("Authorization").substring(7);
         String email=jwtService.extractEmail(token);
         User user = userRepository.findUtilisateurByEmail(email).get();

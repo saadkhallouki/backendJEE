@@ -17,9 +17,19 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping
-    public Reservation createReservation(@RequestBody Reservation reservation) {
-        return reservationService.createReservation(reservation);
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+        if (reservation.getReservationTime() == null) {
+            return ResponseEntity.badRequest().body(null); // Check if the reservation time is null
+        }
+
+        try {
+            Reservation savedReservation = reservationService.createReservation(reservation); // Save reservation
+            return ResponseEntity.ok(savedReservation); // Return successful response with saved reservation
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Handle exceptions
+        }
     }
+
 
     @GetMapping("/{id}")
     public Optional<Reservation> getReservationById(@PathVariable int id) {
